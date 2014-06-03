@@ -65,6 +65,16 @@ swiftmailer:
     password:  "%mailer_password%"
     spool:     { type: memory }
 
+#services
+services:
+    monolog.formatter.line_applog:
+        class: Monolog\Formatter\LineFormatter
+        arguments:
+            - "[%%datetime%%] [%%extra.token%%] %%channel%%.%%level_name%%: %%message%%\n"
+        # tags:
+        #      - { name: monolog.logger, channel: appx }
+
+
 #monolog
 monolog:
     handlers:
@@ -72,15 +82,17 @@ monolog:
             type: stream
             path: "%kernel.root_dir%/logs/applog_error.log"
             level: error
-        syslog:
-            type: syslog
-            path: /var/log/symfony.log
-            level: error
-        dblog:
-            type: stream
-            path: /var/log/symfony.log
-            level: error
-        paymentlog:
-            type: stream
-            path: /var/log/symfony.log
-            level: error
+            formatter: monolog.formatter.line_applog
+            #channels: [appx]
+        # paymentlog:
+        #     type: stream
+        #     path: "%kernel.root_dir%/logs/paymentlog_error.log"
+        #     level: error
+        # syslog:
+        #     type: syslog
+        #     path: /var/log/symfony.log
+        #     level: error
+        # dblog:
+        #     type: stream
+        #     path: /var/log/symfony.log
+        #     level: error

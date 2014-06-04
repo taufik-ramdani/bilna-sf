@@ -1,0 +1,61 @@
+#services
+services:
+    monolog.formatter.api.log:
+        class: Monolog\Formatter\LineFormatter
+        arguments:
+            - "[%%datetime%%] %%channel%%.%%level_name%%: %%message%%\n"
+#     monolog.formatter.line_applog_info:
+#         class: Monolog\Formatter\LineFormatter
+#         arguments:
+#             - "[%%datetime%%] %%channel%%.%%level_name%%: %%message%%\n"
+#         # tags:
+#         #      - { name: monolog.logger, channel: shipmentinfo }
+#     # applog.services:
+#     #     tags:
+#     #         - { name: monolog.logger, channel: appx}
+#     monolog.processor.session_request:
+#         class: Acme\DemoBundle\SessionRequestProcessor
+#         arguments:  ["@session"]
+#         tags:
+#             - { name: monolog.processor, method: processRecord }
+
+#monolog
+monolog:
+    channels: ["foo", "apierror", "apiinfo"]
+    handlers:
+        main:
+            type: stream
+            path: "%kernel.root_dir%/logs/applog_%kernel.environment%_error.log"
+#            level: error
+#            formatter: monolog.formatter.line_applog_error
+            channels: ["!apierr", "!apiinfo"]
+        apierror:
+            type: rotating_file
+            path: "%kernel.root_dir%/logs/error/api_%kernel.environment%.log"
+            level: error
+            formatter: monolog.formatter.api.log
+            channels: [apierror]
+        apiinfo:
+            type: rotating_file
+            path: "%kernel.root_dir%/logs/info/api_%kernel.environment%.log"
+            level: info
+            formatter: monolog.formatter.api.log
+            channels: [apiinfo]
+        # apiinfo:
+        #     type: stream
+        #     path: "%kernel.root_dir%/logs/info/api_%kernel.environment%.log"
+        #     level: info
+        #     formatter: monolog.formatter.api.log
+        #     channels: [apiinfo]
+        # paymentlog:
+        #     type: stream
+        #     path: "%kernel.root_dir%/logs/paymentlog_error.log"
+        #     level: error
+        # syslog:
+        #     type: syslog
+        #     path: /var/log/symfony.log
+        #     level: error
+        # dblog:
+        #     type: stream
+        #     path: /var/log/symfony.log
+        #     level: error

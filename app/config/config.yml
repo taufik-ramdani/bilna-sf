@@ -1,7 +1,8 @@
 imports:
     - { resource: parameters.yml }
     - { resource: security.yml }
-    - { resource: ../../src/Acme/DemoBundle/Resources/config/config.yml }
+    - { resource: logging.yml }
+#    - { resource: ../../src/Acme/DemoBundle/Resources/config/config.yml }
 
 framework:
     #esi:             ~

@@ -1,9 +1,9 @@
 #services
 services:
-    monolog.formatter.api.log:
+    monolog.formatter.bilna.format:
         class: Monolog\Formatter\LineFormatter
         arguments:
-            - "[%%datetime%%] %%channel%%.%%level_name%%: %%message%%\n"
+            - "[%%datetime%%] [%%extra.ip%%] [%%extra.file%%] [%%extra.class%%] [%%extra.function%%] %%channel%%.%%level_name%%: %%context%% %%message%%\n"
 #     monolog.formatter.line_applog_info:
 #         class: Monolog\Formatter\LineFormatter
 #         arguments:
@@ -13,49 +13,65 @@ services:
 #     # applog.services:
 #     #     tags:
 #     #         - { name: monolog.logger, channel: appx}
-#     monolog.processor.session_request:
-#         class: Acme\DemoBundle\SessionRequestProcessor
-#         arguments:  ["@session"]
-#         tags:
-#             - { name: monolog.processor, method: processRecord }
+    # monolog.processor.format_logger:
+    #     class: Acme\DemoBundle\FormatLoggerProcessor
+    #     #arguments:  ["@session"]
+    #     tags:
+    #         - { name: monolog.processor, method: processRecord }
 
 #monolog
 monolog:
-    channels: ["foo", "apierror", "apiinfo"]
+    channels: ["apierror", "apiinfo", "dberror", "dbinfo", "paymenterror", "paymentinfo", "syserror", "sysinfo"]
     handlers:
         main:
             type: stream
             path: "%kernel.root_dir%/logs/applog_%kernel.environment%_error.log"
-#            level: error
-#            formatter: monolog.formatter.line_applog_error
             channels: ["!apierr", "!apiinfo"]
         apierror:
             type: rotating_file
-            path: "%kernel.root_dir%/logs/error/api_%kernel.environment%.log"
+            path: "%kernel.root_dir%/logs/api/error/api_%kernel.environment%.log"
             level: error
-            formatter: monolog.formatter.api.log
+            formatter: monolog.formatter.bilna.format
             channels: [apierror]
         apiinfo:
             type: rotating_file
-            path: "%kernel.root_dir%/logs/info/api_%kernel.environment%.log"
+            path: "%kernel.root_dir%/logs/api/info/api_%kernel.environment%.log"
             level: info
-            formatter: monolog.formatter.api.log
+            formatter: monolog.formatter.bilna.format
             channels: [apiinfo]
-        # apiinfo:
-        #     type: stream
-        #     path: "%kernel.root_dir%/logs/info/api_%kernel.environment%.log"
-        #     level: info
-        #     formatter: monolog.formatter.api.log
-        #     channels: [apiinfo]
-        # paymentlog:
-        #     type: stream
-        #     path: "%kernel.root_dir%/logs/paymentlog_error.log"
-        #     level: error
-        # syslog:
-        #     type: syslog
-        #     path: /var/log/symfony.log
-        #     level: error
-        # dblog:
-        #     type: stream
-        #     path: /var/log/symfony.log
-        #     level: error
+        dberror:
+            type: rotating_file
+            path: "%kernel.root_dir%/logs/db/error/db_%kernel.environment%.log"
+            level: error
+            formatter: monolog.formatter.bilna.format
+            channels: [dberror]
+        dbinfo:
+            type: rotating_file
+            path: "%kernel.root_dir%/logs/db/info/db_%kernel.environment%.log"
+            level: info
+            formatter: monolog.formatter.bilna.format
+            channels: [dbinfo]
+        paymenterror:
+            type: rotating_file
+            path: "%kernel.root_dir%/logs/payment/error/payment_%kernel.environment%.log"
+            level: error
+            formatter: monolog.formatter.bilna.format
+            channels: [paymenterror]
+        paymentinfo:
+            type: rotating_file
+            path: "%kernel.root_dir%/logs/payment/info/payment_%kernel.environment%.log"
+            level: info
+            formatter: monolog.formatter.bilna.format
+            channels: [paymentinfo]
+        syserror:
+            type: rotating_file
+            path: "%kernel.root_dir%/logs/sys/error/sys_%kernel.environment%.log"
+            level: error
+            formatter: monolog.formatter.bilna.format
+            channels: [syserror]
+        sysinfo:
+            type: rotating_file
+            path: "%kernel.root_dir%/logs/sys/info/sys_%kernel.environment%.log"
+            level: info
+            formatter: monolog.formatter.bilna.format
+            channels: [sysinfo]

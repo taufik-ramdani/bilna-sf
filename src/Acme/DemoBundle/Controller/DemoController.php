@@ -27,9 +27,14 @@ class DemoController extends Controller
      */
     public function helloAction($name)
     {
-        $this->get('monolog.logger.apiinfo')->info("hello world");
+        $this->get('monolog.logger.apiinfo')->info("hello world", 
+            array(
+                $_SERVER['SERVER_ADDR'],
+                __METHOD__
+        ));
         $this->get('monolog.logger.apierror')->error("An error occured");
-        //$this->get('logger')->debug("a debug logging");
+        $this->get('monolog.logger.dbinfo')->info("hello world");
+        $this->get('monolog.logger.dberror')->error("An error occured");
         return array('name' => $name);
     }
 

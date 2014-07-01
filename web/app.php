@@ -1,7 +1,8 @@
 <?php
-umask(0000);
 use Symfony\Component\ClassLoader\ApcClassLoader;
 use Symfony\Component\HttpFoundation\Request;
+
+umask(0000);
 
 $loader = require_once __DIR__.'/../app/bootstrap.php.cache';
 
@@ -14,7 +15,7 @@ $loader->register(true);
 */
 
 require_once __DIR__.'/../app/AppKernel.php';
-//require_once __DIR__.'/../app/AppCache.php';
+require_once __DIR__.'/../app/AppCache.php';
 
 $kernel = new AppKernel('prod', false);
 $kernel->loadClassCache();

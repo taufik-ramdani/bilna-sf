@@ -1,0 +1,4 @@
+bilna-frontend:
+    resource: "@BilnaFrontendBundle/Controller/"
+    type:     annotation
+    prefix:   /

@@ -1,6 +1,8 @@
 imports:
     - { resource: parameters.yml }
     - { resource: security.yml }
+    - { resource: logging.yml }
+#    - { resource: ../../src/Acme/DemoBundle/Resources/config/config.yml }
 
 framework:
     #esi:             ~
@@ -64,23 +66,3 @@ swiftmailer:
     username:  "%mailer_user%"
     password:  "%mailer_password%"
     spool:     { type: memory }
-
-#monolog
-monolog:
-    handlers:
-        applog:
-            type: stream
-            path: "%kernel.root_dir%/logs/applog_error.log"
-            level: error
-        syslog:
-            type: syslog
-            path: /var/log/symfony.log
-            level: error
-        dblog:
-            type: stream
-            path: /var/log/symfony.log
-            level: error
-        paymentlog:
-            type: stream
-            path: /var/log/symfony.log
-            level: error

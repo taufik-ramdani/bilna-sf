@@ -1,0 +1,28 @@
+<html>
+<head>
+{% include "::core/css/bilnacss.html.twig" %}
+{% include "::core/css/3rdparty.html.twig" %}
+{% include "::core/javascript/mainjs.html.twig" %}
+</head>
+<body>
+<div class="container">
+	<div class="header row">
+		{% include "::templates/html/header.html.twig" %}	
+	</div>
+	<div class="middle row">
+		<div class="content col-md-8 col-sm-12 col-xs-12">
+			{% block content %} {% endblock %}
+		</div>
+		<div class="left_nav col-md-2 col-sm-12 col-xs-12">
+			{% block left %} {% endblock %}
+		</div>
+		<div class="right_nav col-md-2 col-sm-12 col-xs-12">
+			{% block right %} {% endblock %}
+		</div>
+	</div>
+	<div class="footer row">
+		{% include "::templates/html/footer.html.twig" %}
+	</div>
+</div>
+</body>
+</html>
